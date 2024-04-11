@@ -32,7 +32,7 @@ const datadog_subscription = document.querySelector(
   '[data-name="datadog_subscription"]'
 );
 const oss_subscription = document.querySelector(
-  '[data-name="oss_subscription"]'
+  '[data-name="oss__subscription"]'
 );
 const groundcover_hosting = document.querySelector(
   '[data-name="groundcover_hosting"]'
