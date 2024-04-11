@@ -76,7 +76,7 @@ const metrics_hidden = document.querySelector('#metrics_hidden');
 const containers_hidden = document.querySelector('#containers_hidden');
 
 // gated form
-const modal_wrap = document.querySelector('.modal-warp.show');
+const modal_wrap = document.querySelector('#modal_wrap');
 const gated_form = document.querySelector('[data-name="TCO_Gated_Form"]');
 const first_name = document.querySelector('#first_name');
 const last_name = document.querySelector('#last_name');
