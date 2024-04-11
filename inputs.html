@@ -1,0 +1,172 @@
+<input
+  class="input form"
+  maxlength="256"
+  name="first_name"
+  data-name="first_name"
+  placeholder="First name"
+  type="text"
+  id="first_name"
+  required />
+<input
+  class="input form"
+  maxlength="256"
+  name="last_name"
+  data-name="last_name"
+  placeholder="Last name"
+  type="text"
+  id="last_name"
+  required />
+<input
+  class="input form"
+  maxlength="256"
+  name="job_title"
+  data-name="job_title"
+  placeholder="Job title"
+  type="text"
+  id="job_title"
+  required />
+<input
+  class="input form"
+  maxlength="256"
+  name="company"
+  data-name="company"
+  placeholder="Company name"
+  type="text"
+  id="company"
+  required />
+<input
+  class="input form"
+  maxlength="256"
+  name="phone"
+  data-name="phone"
+  placeholder="Phone number"
+  type="tel"
+  id="phone"
+  required />
+<input
+  class="input form"
+  maxlength="256"
+  name="email"
+  data-name="email"
+  placeholder="you@company.com"
+  type="email"
+  id="email"
+  required />
+
+<button
+  class="submit is-w-full"
+  disabled
+  type="submit"
+  data-name="submit_input">
+  Let's go!
+</button>
+
+<script>
+  const modal_wrap = document.querySelector('.modal-warp.show');
+  const gated_form = document.querySelector('[data-name="TCO_Gated_Form"]');
+  const first_name = document.querySelector('#first_name');
+  const last_name = document.querySelector('#last_name');
+  const job_title = document.querySelector('#job_title');
+  const company = document.querySelector('#company');
+  const phone = document.querySelector('#phone');
+  const email = document.querySelector('#email');
+  const errors = document.querySelector('.errors');
+  const submit = document.querySelector('[data-name="submit_input"]');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    modal_wrap.classList.add('show');
+    errors.style.display = 'none';
+  });
+
+  gated_form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    modal_wrap.classList.remove('show');
+
+    first_name_hidden.value = first_name.value;
+    last_name_hidden.value = last_name.value;
+    job_title_hidden.value = job_title.value;
+    company_hidden.value = company.value;
+    phone_hidden.value = phone.value;
+    email_hidden.value = email.value;
+
+    analytics.identify(email.value || '', {
+      first_name: first_name.value || '',
+      last_name: last_name.value || '',
+      job_title: job_title.value || '',
+      company: company.value || '',
+      email: email.value || '',
+      phone: phone.value || '',
+    });
+
+    analytics.track('TCO_Gated_Form', {
+      first_name: first_name.value || '',
+      last_name: last_name.value || '',
+      job_title: job_title.value || '',
+      company: company.value || '',
+      email: email.value || '',
+      phone: phone.value || '',
+      page_path: window.location.href,
+      reporter: 'webflow',
+      event: 'form submit',
+      source: 'url need to add',
+      userType: 'lead',
+    });
+  });
+
+  // email validation
+  const invalidDomains = [
+    'gmail.com',
+    'yahoo.com',
+    'hotmail.com',
+    'competitor.com',
+    'orange.fr',
+    'outlook.com',
+    'yandex.ru',
+    'yandex.com',
+    'wanadoo.fr',
+    'yahoo.fr',
+    'protonmail.com',
+  ];
+  email.addEventListener('blur', () => {
+    const domainPart = this.value.split('@')[1];
+
+    if (invalidDomains.includes(domainPart)) {
+      errors.style.display = 'block';
+      email.value = '';
+      email.placeholder = 'Please enter a business email';
+      submit.disabled = true;
+    } else {
+      errors.style.display = 'none';
+      submit.disabled = false;
+    }
+  });
+</script>
+
+<!-- $(document).ready(function() {
+    // make an array of invalid domains
+    const invalidDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'competitor.com', 'orange.fr', 'outlook.com', 'yandex.ru', 'yandex.com', 'wanadoo.fr', 'yahoo.fr', 'protonmail.com'];
+
+    // get the submit button
+    const submitBtn = $('#mobile_form_submit');
+    // on submit button click
+    submitBtn.click(()=>{
+      // get the email field
+      const email = $('#email_modal');
+      // split email at '@' character to get domain
+      const domainPart = email.val().split('@')[1];
+
+      // if the domain exists in the invalidDomains array
+      if(invalidDomains.indexOf(domainPart) !== -1) {
+        // clear email field
+        email.val('');
+        // add a 'use business mail' placeholder
+        email.attr('placeholder','Please enter a business email');
+        // prevent form submission
+        return false;
+      }
+      else{	// else if email is not invalid
+        // submit form
+        return true;
+      }
+    });
+  }); -->
