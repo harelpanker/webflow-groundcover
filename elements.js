@@ -1,4 +1,4 @@
-alert('hello from elements.js');
+console.log('start');
 const total = document.querySelectorAll('[data-name="total"]');
 const total_short = document.querySelectorAll('[data-name="total_short"]');
 const total_oss = document.querySelectorAll('[data-name="total_oss"]');
