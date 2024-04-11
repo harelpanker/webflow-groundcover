@@ -1,4 +1,4 @@
-console.log('one_3.js');
+// console.log('one_3.js');
 const total = document.querySelectorAll('[data-name="total"]');
 const total_short = document.querySelectorAll('[data-name="total_short"]');
 const total_oss = document.querySelectorAll('[data-name="total_oss"]');
@@ -76,7 +76,7 @@ const metrics_hidden = document.querySelector('#metrics_hidden');
 const containers_hidden = document.querySelector('#containers_hidden');
 
 // gated form
-const modal_wrap = document.querySelector('.modal-warp.show');
+const modal_wrap = document.querySelector('#modal_wrap');
 const gated_form = document.querySelector('[data-name="TCO_Gated_Form"]');
 const first_name = document.querySelector('#first_name');
 const last_name = document.querySelector('#last_name');
@@ -378,8 +378,11 @@ hidden_form.addEventListener('submit', (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  modal_wrap.classList.add('show');
-  error.style.display = 'none';
+  if (!window.location.href.includes('utm_source=test')) {
+    modal_wrap.classList.add('show');
+    error.style.display = 'none';
+    submit.disabled = true;
+  }
 });
 
 gated_form.addEventListener('submit', (event) => {
@@ -432,7 +435,7 @@ const invalidDomains = [
   'protonmail.com',
 ];
 email.addEventListener('blur', () => {
-  const domainPart = this.value.split('@')[1];
+  const domainPart = email.value.split('@')[1];
 
   if (invalidDomains.includes(domainPart)) {
     error.style.display = 'block';
