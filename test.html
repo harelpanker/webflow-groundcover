@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML + CSS</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.slate.min.css" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <div class="container">
+          <hgroup>
+            <h1>TCO calculator</h1>
+          </hgroup>
+          <div class="container">
+            <h2>Results:</h2>
+            <h3>
+              groundcover Yearly Cost: $<span data-name="total"></span> | $<span
+                data-name="total_short"></span>
+            </h3>
+            <h3>
+              OSS Yearly Cost: $<span data-name="total_oss"></span> | $<span
+                data-name="total_oss_short"></span>
+            </h3>
+            <h3>
+              Datadog Yearly Cost: $<span data-name="total_datadog"></span> |
+              $<span data-name="total_datadog_short"></span>
+            </h3>
+          </div>
+          <!-- form -->
+          <form>
+            <fieldset>
+              <label>
+                Nodes:
+                <input
+                  type="range"
+                  id="input_range"
+                  name="range"
+                  min="20"
+                  max="2500"
+                  value="30" />
+              </label>
+              <input
+                id="input_nodes"
+                name="nodes"
+                placeholder="Nodes"
+                autocomplete="nodes"
+                type="number"
+                minlength="20"
+                maxlength="2500"
+                required
+                value="30" />
+              <label>
+                Logs per sec:
+                <input
+                  type="number"
+                  id="logs_per_sec"
+                  name="logs_per_sec"
+                  placeholder="Logs per sec (per Node)"
+                  autocomplete="logs_per_sec"
+                  minlength="10"
+                  maxlength="500"
+                  value="10" />
+              </label>
+              <label>
+                Spans per sec:
+                <input
+                  type="number"
+                  id="spans_per_sec"
+                  name="spans_per_sec"
+                  placeholder="Spans per sec (per Node)"
+                  autocomplete="spans_per_sec"
+                  minlength="1"
+                  maxlength="100"
+                  value="10" />
+              </label>
+              <label>
+                Metrics:
+                <input
+                  type="number"
+                  name="metrics"
+                  id="metrics"
+                  placeholder="Metrics (per Node)"
+                  autocomplete="metrics"
+                  minlength="250"
+                  maxlength="5000"
+                  value="250" />
+              </label>
+              <label>
+                Containers:
+                <input
+                  type="number"
+                  id="containers"
+                  name="containers"
+                  placeholder="Containers (per host)"
+                  autocomplete="containers"
+                  minlength="15"
+                  maxlength="500"
+                  value="50" />
+              </label>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script src="./elements.js"></script>
+    <script src="./formatHelper.js"></script>
+    <script src="./inputsBinding.js"></script>
+    <script src="./groundcoverCalc.js"></script>
+    <script src="./ossCalc.js"></script>
+    <script src="./datadogCalc.js"></script>
+  </body>
+</html>
