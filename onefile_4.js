@@ -1,4 +1,3 @@
-// console.log('start');
 const total = document.querySelectorAll('[data-name="total"]');
 const total_short = document.querySelectorAll('[data-name="total_short"]');
 const total_oss = document.querySelectorAll('[data-name="total_oss"]');
@@ -46,7 +45,7 @@ const datadog_implementation = document.querySelector(
   '[data-name="datadog_implementation"]'
 );
 const oss_implementation = document.querySelector(
-  '[data-name="oss_mplementation"]'
+  '[data-name="oss_implementation"]'
 );
 const groundcover_maintenance = document.querySelector(
   '[data-name="groundcover_maintenance"]'
@@ -128,7 +127,7 @@ const calculate_groundcover = () => {
         hosting_victoria_metrics_disk
     ) * 12
   }`;
-  groundcover_implementation.innerHTML = `${0}`;
+  groundcover_implementation.innerHTML = `$${0}`;
   groundcover_maintenance.innerHTML = `$${Math.floor(maintenance) * 12}`;
   groundcover_support.innerHTML = `$${0}`;
 
@@ -259,7 +258,6 @@ const calculate_datadog = () => {
   total_datadog_percent.forEach(
     (item) => (item.innerHTML = (dataDogPercentage * 100).toFixed(0))
   );
-  console.log(Math.round(dataDogPercentage));
   total_datadog.forEach(
     (item) => (item.innerHTML = Math.round(yearlyCost).toLocaleString())
   );

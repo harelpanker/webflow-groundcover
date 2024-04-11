@@ -33,7 +33,7 @@ const calculate_groundcover = () => {
         hosting_victoria_metrics_disk
     ) * 12
   }`;
-  groundcover_implementation.innerHTML = `${0}`;
+  groundcover_implementation.innerHTML = `$${0}`;
   groundcover_maintenance.innerHTML = `$${Math.floor(maintenance) * 12}`;
   groundcover_support.innerHTML = `$${0}`;
 

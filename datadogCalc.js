@@ -57,7 +57,6 @@ const calculate_datadog = () => {
   total_datadog_percent.forEach(
     (item) => (item.innerHTML = (dataDogPercentage * 100).toFixed(0))
   );
-  console.log(Math.round(dataDogPercentage));
   total_datadog.forEach(
     (item) => (item.innerHTML = Math.round(yearlyCost).toLocaleString())
   );
