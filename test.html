@@ -19,6 +19,11 @@
           </hgroup>
           <div class="container">
             <h2>Results:</h2>
+            <div class="title is--24">
+              <span class="font-inter is--600"
+                ><strong>$<span data-name="total"></span></strong
+              ></span>
+            </div>
             <h3>
               groundcover Yearly Cost: $<span data-name="total"></span> | $<span
                 data-name="total_short"></span>
@@ -31,6 +36,50 @@
               Datadog Yearly Cost: $<span data-name="total_datadog"></span> |
               $<span data-name="total_datadog_short"></span>
             </h3>
+            <h3>
+              Percentage Datadog:
+              <span data-name="total_datadog_percent"></span>%
+            </h3>
+            <h3>
+              Percentage OSS: <span data-name="total_oss_percent"></span>%
+            </h3>
+
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">groundcover</th>
+                  <th scope="col">datadog</th>
+                  <th scope="col">oss</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th data-name="groundcover_subscription"></th>
+                  <td data-name="datadog_subscription"></td>
+                  <td data-name="oss__subscription"></td>
+                </tr>
+                <tr>
+                  <th data-name="groundcover_hosting"></th>
+                  <td data-name="datadog_hosting"></td>
+                  <td data-name="oss_hosting"></td>
+                </tr>
+                <tr>
+                  <th data-name="groundcover_implementation"></th>
+                  <td data-name="datadog_implementation"></td>
+                  <td data-name="oss_mplementation"></td>
+                </tr>
+                <tr>
+                  <th data-name="groundcover_maintenance"></th>
+                  <td data-name="datadog_maintenance"></td>
+                  <td data-name="oss_maintenance"></td>
+                </tr>
+                <tr>
+                  <th data-name="groundcover_support"></th>
+                  <td data-name="datadog_support"></td>
+                  <td data-name="oss_support"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <!-- form -->
           <form>
@@ -38,6 +87,7 @@
               <label>
                 Nodes:
                 <input
+                  class="input-slider"
                   type="range"
                   id="input_range"
                   name="range"
@@ -46,6 +96,7 @@
                   value="30" />
               </label>
               <input
+                class="input is-calc"
                 id="input_nodes"
                 name="nodes"
                 placeholder="Nodes"
@@ -58,6 +109,7 @@
               <label>
                 Logs per sec:
                 <input
+                  class="input is-calc"
                   type="number"
                   id="logs_per_sec"
                   name="logs_per_sec"
@@ -70,6 +122,7 @@
               <label>
                 Spans per sec:
                 <input
+                  class="input is-calc"
                   type="number"
                   id="spans_per_sec"
                   name="spans_per_sec"
@@ -82,6 +135,7 @@
               <label>
                 Metrics:
                 <input
+                  class="input is-calc"
                   type="number"
                   name="metrics"
                   id="metrics"
@@ -94,6 +148,7 @@
               <label>
                 Containers:
                 <input
+                  class="input is-calc"
                   type="number"
                   id="containers"
                   name="containers"
@@ -109,11 +164,13 @@
       </section>
     </main>
 
+    <!-- <script src="./onefile.js"></script> -->
     <script src="./elements.js"></script>
     <script src="./formatHelper.js"></script>
     <script src="./inputsBinding.js"></script>
     <script src="./groundcoverCalc.js"></script>
     <script src="./ossCalc.js"></script>
     <script src="./datadogCalc.js"></script>
+    <script src="./inputsEvents.js"></script>
   </body>
 </html>

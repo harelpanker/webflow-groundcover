@@ -24,6 +24,19 @@ const calculate_groundcover = () => {
   const hosting_victoria_metrics_disk = victoria_metrics * 1000 * 0.08;
   const maintenance = (0.1 * 127000) / 12;
 
+  groundcover_subscription.innerHTML = `$${license * 12}`;
+  groundcover_hosting.innerHTML = `$${
+    Math.floor(
+      hosting_click_house_instance +
+        hosting_click_house_disk +
+        hosting_victoria_metrics_instance +
+        hosting_victoria_metrics_disk
+    ) * 12
+  }`;
+  groundcover_implementation.innerHTML = `${0}`;
+  groundcover_maintenance.innerHTML = `$${Math.floor(maintenance) * 12}`;
+  groundcover_support.innerHTML = `$${0}`;
+
   const totalNumber =
     (license +
       hosting_click_house_instance +
@@ -32,20 +45,10 @@ const calculate_groundcover = () => {
       hosting_victoria_metrics_disk +
       maintenance) *
     12;
+  graoundcover_price = totalNumber;
 
   total.forEach(
     (item) => (item.innerHTML = Math.round(totalNumber).toLocaleString())
   );
   total_short.forEach((item) => (item.innerHTML = formatNumber(totalNumber)));
 };
-
-const handleInputChange = () => calculate_groundcover();
-
-input_nodes.addEventListener('input', handleInputChange);
-input_range.addEventListener('input', handleInputChange);
-input_logs_per_sec.addEventListener('input', handleInputChange);
-input_spans_per_sec.addEventListener('input', handleInputChange);
-input_metrics.addEventListener('input', handleInputChange);
-input_containers.addEventListener('input', handleInputChange);
-
-document.addEventListener('DOMContentLoaded', () => calculate_groundcover());

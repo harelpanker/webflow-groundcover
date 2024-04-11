@@ -25,10 +25,24 @@ const calculate_oss = () => {
   const maintenance = (fte_salary * 1 + fte_salary * 0.5) * 12;
   const support = fte_salary * 1 * 12;
 
+  //
+  oss_subscription.innerHTML = `$0`;
+  oss_hosting.innerHTML = `$${Math.floor(hosting)}`;
+  oss_implementation.innerHTML = `$${implementation_and_setup}`;
+  oss_maintenance.innerHTML = `$${Math.floor(maintenance)}`;
+  oss_support.innerHTML = `$${support}`;
+  //
+
   // total
   const monthlyCost =
     (support + maintenance + implementation_and_setup + hosting) / 12;
   const yearlyCost = monthlyCost * 12;
+  oss_price = yearlyCost;
+
+  const ossPercentage = Math.abs(graoundcover_price / oss_price - 1);
+  total_oss_percent.forEach(
+    (item) => (item.innerHTML = (ossPercentage * 100).toFixed(0))
+  );
 
   total_oss.forEach(
     (item) => (item.innerHTML = Math.round(yearlyCost).toLocaleString())
@@ -37,15 +51,3 @@ const calculate_oss = () => {
     (item) => (item.innerHTML = formatNumber(yearlyCost))
   );
 };
-
-// run the events
-const handleOssInputChange = () => calculate_oss();
-
-input_nodes.addEventListener('input', handleOssInputChange);
-input_range.addEventListener('input', handleOssInputChange);
-input_logs_per_sec.addEventListener('input', handleOssInputChange);
-input_spans_per_sec.addEventListener('input', handleOssInputChange);
-input_metrics.addEventListener('input', handleOssInputChange);
-input_containers.addEventListener('input', handleOssInputChange);
-
-document.addEventListener('DOMContentLoaded', () => calculate_oss());
