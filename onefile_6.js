@@ -62,17 +62,17 @@ const oss_support = document.querySelector('[data-name="oss_support"]');
 
 // hidden form
 const hidden_form = document.querySelector('[data-name="TCO_Demo_Req"]');
-const first_name_hidden = documet.querySelector('#first_name_hidden');
-const last_name_hidden = documet.querySelector('#last_name_hidden');
-const job_title_hidden = documet.querySelector('#job_title_hidden');
-const company_hidden = documet.querySelector('#company_hidden');
-const phone_hidden = documet.querySelector('#phone_hidden');
-const email_hidden = documet.querySelector('#email_hidden');
-const nodes_hidden = documet.querySelector('#nodes_hidden');
-const logs_per_sec_hidden = documet.querySelector('#logs_per_sec_hidden');
-const spans_per_sec_hidden = documet.querySelector('#spans_per_sec_hidden');
-const metrics_hidden = documet.querySelector('#metrics_hidden');
-const containers_hidden = documet.querySelector('#containers_hidden');
+const first_name_hidden = document.querySelector('#first_name_hidden');
+const last_name_hidden = document.querySelector('#last_name_hidden');
+const job_title_hidden = document.querySelector('#job_title_hidden');
+const company_hidden = document.querySelector('#company_hidden');
+const phone_hidden = document.querySelector('#phone_hidden');
+const email_hidden = document.querySelector('#email_hidden');
+const nodes_hidden = document.querySelector('#nodes_hidden');
+const logs_per_sec_hidden = document.querySelector('#logs_per_sec_hidden');
+const spans_per_sec_hidden = document.querySelector('#spans_per_sec_hidden');
+const metrics_hidden = document.querySelector('#metrics_hidden');
+const containers_hidden = document.querySelector('#containers_hidden');
 
 // gated form
 const modal_wrap = document.querySelector('.modal-warp.show');
