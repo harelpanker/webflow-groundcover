@@ -83,7 +83,7 @@ const job_title = document.querySelector('#job_title');
 const company = document.querySelector('#company');
 const phone = document.querySelector('#phone');
 const email = document.querySelector('#email');
-const errors = document.querySelector('.errors');
+const error = document.querySelector('.error');
 const submit = document.querySelector('[data-name="submit_input"]');
 
 let graoundcover_price = 0;
@@ -378,7 +378,7 @@ hidden_form.addEventListener('submit', (event) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   modal_wrap.classList.add('show');
-  errors.style.display = 'none';
+  error.style.display = 'none';
 });
 
 gated_form.addEventListener('submit', (event) => {
@@ -434,12 +434,12 @@ email.addEventListener('blur', () => {
   const domainPart = this.value.split('@')[1];
 
   if (invalidDomains.includes(domainPart)) {
-    errors.style.display = 'block';
+    error.style.display = 'block';
     email.value = '';
     email.placeholder = 'Please enter a business email';
     submit.disabled = true;
   } else {
-    errors.style.display = 'none';
+    error.style.display = 'none';
     submit.disabled = false;
   }
 });
