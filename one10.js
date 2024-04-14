@@ -131,18 +131,22 @@ input_range.addEventListener('input', () => {
   updateValues();
   rangeController();
 });
-// https://codepen.io/amoknira/pen/vYZzgJZ
-input_range.addEventListener('input', function () {
-  const value = this.value;
-  const max = parseInt(this.max); // Get the maximum value as an integer
-  const percentage = (value / max) * 100; // Calculate the percentage value
 
-  this.style.background = `linear-gradient(to right, #828DF8 0%, #828DF8 ${percentage}%, #EAECF0 ${percentage}%, #EAECF0 100%)`;
-});
+const handleGradientChange = () => {
+  const value = input_range.value;
+  const max = parseInt(input_range.max);
+  const percentage = (value / max) * 100;
+
+  input_range.style.background = `linear-gradient(to right, #828DF8 0%, #828DF8 ${percentage}%, #EAECF0 ${percentage}%, #EAECF0 100%)`;
+};
+
+// https://codepen.io/amoknira/pen/vYZzgJZ
+input_range.addEventListener('input', handleGradientChange);
 
 input_nodes.addEventListener('input', function () {
   input_range.value = input_nodes.value;
   updateValues();
+  handleGradientChange();
 });
 // https://docs.google.com/spreadsheets/d/1trISbcrfOtZh3LG4eOG-SnWCTZ5iU2KVK0_V_pAaaT8/edit#gid=0
 const calculate_groundcover = () => {
