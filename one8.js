@@ -170,17 +170,19 @@ const calculate_groundcover = () => {
   const hosting_victoria_metrics_disk = victoria_metrics * 1000 * 0.08;
   const maintenance = (0.1 * 127000) / 12;
 
-  groundcover_subscription.innerHTML = `$${license * 12}`;
-  groundcover_hosting.innerHTML = `$${
+  groundcover_subscription.innerHTML = `$${(license * 12).toLocaleString()}`;
+  groundcover_hosting.innerHTML = `$${(
     Math.floor(
       hosting_click_house_instance +
         hosting_click_house_disk +
         hosting_victoria_metrics_instance +
         hosting_victoria_metrics_disk
     ) * 12
-  }`;
+  ).toLocaleString()}`;
   groundcover_implementation.innerHTML = `$${0}`;
-  groundcover_maintenance.innerHTML = `$${Math.floor(maintenance) * 12}`;
+  groundcover_maintenance.innerHTML = `$${(
+    Math.floor(maintenance) * 12
+  ).toLocaleString()}`;
   groundcover_support.innerHTML = `$${0}`;
 
   const totalNumber =
@@ -227,10 +229,10 @@ const calculate_oss = () => {
 
   //
   oss_subscription.innerHTML = `$0`;
-  oss_hosting.innerHTML = `$${Math.floor(hosting)}`;
-  oss_implementation.innerHTML = `$${implementation_and_setup}`;
-  oss_maintenance.innerHTML = `$${Math.floor(maintenance)}`;
-  oss_support.innerHTML = `$${support}`;
+  oss_hosting.innerHTML = `$${Math.floor(hosting).toLocaleString()}`;
+  oss_implementation.innerHTML = `$${implementation_and_setup.toLocaleString()}`;
+  oss_maintenance.innerHTML = `$${Math.floor(maintenance).toLocaleString()}`;
+  oss_support.innerHTML = `$${support.toLocaleString()}`;
   //
 
   // total
@@ -291,12 +293,14 @@ const calculate_datadog = () => {
   const support = 0;
 
   //
-  datadog_subscription.innerHTML = `$${
+  datadog_subscription.innerHTML = `$${(
     Math.floor(apm + logs + infrastructure) * 12
-  }`;
+  ).toLocaleString()}`;
   datadog_hosting.innerHTML = `$${0}`;
   datadog_implementation.innerHTML = `$${0}`;
-  datadog_maintenance.innerHTML = `$${Math.floor(maintenance) * 12}`;
+  datadog_maintenance.innerHTML = `$${(
+    Math.floor(maintenance) * 12
+  ).toLocaleString()}`;
   datadog_support.innerHTML = `$${0}`;
   //
 
