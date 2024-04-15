@@ -1,4 +1,3 @@
-// console.log('one_3.js');
 const total = document.querySelectorAll('[data-name="total"]');
 const total_short = document.querySelectorAll('[data-name="total_short"]');
 const total_oss = document.querySelectorAll('[data-name="total_oss"]');
@@ -86,6 +85,7 @@ const phone = document.querySelector('#phone');
 const email = document.querySelector('#email');
 const error = document.querySelector('#error');
 const submit = document.querySelector('[data-name="submit_input"]');
+const hasCookie = checkCookie('TCO_Gated_Form_Submit');
 
 let graoundcover_price = 0;
 let datadog_price = 0;
@@ -112,13 +112,99 @@ function formatNumber(num, precision = 0) {
 function updateValues() {
   input_nodes.value = input_range.value;
 }
+function rangeController() {
+  if (input_range.value > 2500 || input_nodes.value > 2500) {
+    input_range.value = 2500;
+    input_nodes.value = 2500;
+  }
+  if (input_range.value < 20 || input_nodes.value < 20) {
+    input_range.value = 20;
+    input_nodes.value = 20;
+  }
+}
+function rangeControllerLogs() {
+  if (input_logs_per_sec.value > 500) {
+    input_logs_per_sec.value = 500;
+  }
+  if (input_logs_per_sec.value < 10) {
+    input_logs_per_sec.value = 10;
+  }
+}
+function rangeControllerSpans() {
+  if (input_spans_per_sec.value > 100) {
+    input_spans_per_sec.value = 100;
+  }
+  if (input_spans_per_sec.value < 1) {
+    input_spans_per_sec.value = 1;
+  }
+}
 
-input_range.addEventListener('input', updateValues);
+function rangeControllerContainers() {
+  if (input_containers.value > 500) {
+    input_containers.value = 500;
+  }
+  if (input_containers.value < 15) {
+    input_containers.value = 15;
+  }
+}
+
+function rangeControllerMetrics() {
+  if (input_metrics.value > 5000) {
+    input_metrics.value = 5000;
+  }
+  if (input_metrics.value < 250) {
+    input_metrics.value = 250;
+  }
+}
+
+input_metrics.addEventListener('blur', () => rangeControllerMetrics());
+input_containers.addEventListener('blur', () => rangeControllerContainers());
+
+input_spans_per_sec.addEventListener('blur', () => rangeControllerSpans());
+input_logs_per_sec.addEventListener('blur', () => rangeControllerLogs());
+input_range.addEventListener('blur', () => rangeController());
+input_nodes.addEventListener('blur', () => rangeController());
+
+input_range.addEventListener('input', () => {
+  updateValues();
+  rangeController();
+});
+
+const handleGradientChange = () => {
+  const value = input_range.value;
+  const max = parseInt(input_range.max);
+  const percentage = (value / max) * 100;
+
+  input_range.style.background = `linear-gradient(to right, #828DF8 0%, #828DF8 ${percentage}%, #EAECF0 ${percentage}%, #EAECF0 100%)`;
+};
+
+// https://codepen.io/amoknira/pen/vYZzgJZ
+input_range.addEventListener('input', handleGradientChange);
 
 input_nodes.addEventListener('input', function () {
   input_range.value = input_nodes.value;
   updateValues();
+  handleGradientChange();
 });
+
+function setCookie(cookieName, cookieValue, expirationDays) {
+  const d = new Date();
+  d.setTime(d.getTime() + expirationDays * 24 * 60 * 60 * 1000);
+  const expires = 'expires=' + d.toUTCString();
+  document.cookie = cookieName + '=' + cookieValue + ';' + expires + ';path=/';
+}
+function checkCookie(cookieName) {
+  const cookies = document.cookie.split(';');
+
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith(cookieName + '=')) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // https://docs.google.com/spreadsheets/d/1trISbcrfOtZh3LG4eOG-SnWCTZ5iU2KVK0_V_pAaaT8/edit#gid=0
 const calculate_groundcover = () => {
   const victoria_metrics =
@@ -145,17 +231,19 @@ const calculate_groundcover = () => {
   const hosting_victoria_metrics_disk = victoria_metrics * 1000 * 0.08;
   const maintenance = (0.1 * 127000) / 12;
 
-  groundcover_subscription.innerHTML = `$${license * 12}`;
-  groundcover_hosting.innerHTML = `$${
+  groundcover_subscription.innerHTML = `$${(license * 12).toLocaleString()}`;
+  groundcover_hosting.innerHTML = `$${(
     Math.floor(
       hosting_click_house_instance +
         hosting_click_house_disk +
         hosting_victoria_metrics_instance +
         hosting_victoria_metrics_disk
     ) * 12
-  }`;
+  ).toLocaleString()}`;
   groundcover_implementation.innerHTML = `$${0}`;
-  groundcover_maintenance.innerHTML = `$${Math.floor(maintenance) * 12}`;
+  groundcover_maintenance.innerHTML = `$${(
+    Math.floor(maintenance) * 12
+  ).toLocaleString()}`;
   groundcover_support.innerHTML = `$${0}`;
 
   const totalNumber =
@@ -202,10 +290,10 @@ const calculate_oss = () => {
 
   //
   oss_subscription.innerHTML = `$0`;
-  oss_hosting.innerHTML = `$${Math.floor(hosting)}`;
-  oss_implementation.innerHTML = `$${implementation_and_setup}`;
-  oss_maintenance.innerHTML = `$${Math.floor(maintenance)}`;
-  oss_support.innerHTML = `$${support}`;
+  oss_hosting.innerHTML = `$${Math.floor(hosting).toLocaleString()}`;
+  oss_implementation.innerHTML = `$${implementation_and_setup.toLocaleString()}`;
+  oss_maintenance.innerHTML = `$${Math.floor(maintenance).toLocaleString()}`;
+  oss_support.innerHTML = `$${support.toLocaleString()}`;
   //
 
   // total
@@ -266,12 +354,14 @@ const calculate_datadog = () => {
   const support = 0;
 
   //
-  datadog_subscription.innerHTML = `$${
+  datadog_subscription.innerHTML = `$${(
     Math.floor(apm + logs + infrastructure) * 12
-  }`;
+  ).toLocaleString()}`;
   datadog_hosting.innerHTML = `$${0}`;
   datadog_implementation.innerHTML = `$${0}`;
-  datadog_maintenance.innerHTML = `$${Math.floor(maintenance) * 12}`;
+  datadog_maintenance.innerHTML = `$${(
+    Math.floor(maintenance) * 12
+  ).toLocaleString()}`;
   datadog_support.innerHTML = `$${0}`;
   //
 
@@ -292,6 +382,7 @@ const calculate_datadog = () => {
     (item) => (item.innerHTML = formatNumber(yearlyCost))
   );
 };
+
 const handleDatadogInputChange = () => calculate_datadog();
 const handleInputChange = () => calculate_groundcover();
 const handleOssInputChange = () => calculate_oss();
@@ -331,6 +422,9 @@ document.addEventListener('DOMContentLoaded', () => {
   calculate_groundcover();
   handleDatadogInputChange();
   calculate_oss();
+  if (hasCookie) {
+    modal_wrap.style.display = 'none';
+  }
 });
 
 // hidden form event
@@ -350,11 +444,11 @@ hidden_form.addEventListener('submit', (event) => {
     company: company_hidden.value || '',
     email: email_hidden.value || '',
     phone: phone_hidden.value || '',
-    nodes: nodes_hidden.value || '',
-    logs_per_sec: logs_per_sec_hidden.value || '',
-    spans_per_sec: spans_per_sec_hidden.value || '',
-    metrics: metrics_hidden.value || '',
-    containers: containers_hidden.value || '',
+    tco_nodes: nodes_hidden.value || '',
+    tco_logs_per_sec: logs_per_sec_hidden.value || '',
+    tco_spans_per_sec: spans_per_sec_hidden.value || '',
+    tco_metrics_per_sec: metrics_hidden.value || '',
+    tco_containers_per_host: containers_hidden.value || '',
   });
 
   analytics.track('TCO_Demo_Req', {
@@ -364,11 +458,11 @@ hidden_form.addEventListener('submit', (event) => {
     company: company_hidden.value || '',
     email: email_hidden.value || '',
     phone: phone_hidden.value || '',
-    nodes: nodes_hidden.value || '',
-    logs_per_sec: logs_per_sec_hidden.value || '',
-    spans_per_sec: spans_per_sec_hidden.value || '',
-    metrics: metrics_hidden.value || '',
-    containers: containers_hidden.value || '',
+    tco_nodes: nodes_hidden.value || '',
+    tco_logs_per_sec: logs_per_sec_hidden.value || '',
+    tco_spans_per_sec: spans_per_sec_hidden.value || '',
+    tco_metrics_per_sec: metrics_hidden.value || '',
+    tco_containers_per_host: containers_hidden.value || '',
     page_path: window.location.href,
     reporter: 'webflow',
     event: 'TCO_Demo_Req',
@@ -418,6 +512,8 @@ gated_form.addEventListener('submit', (event) => {
     source: 'url need to add',
     userType: 'lead',
   });
+
+  setCookie('TCO_Gated_Form_Submit', 'true', 30);
 });
 
 // email validation

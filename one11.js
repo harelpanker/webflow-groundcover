@@ -1,4 +1,3 @@
-// console.log('one_3.js');
 const total = document.querySelectorAll('[data-name="total"]');
 const total_short = document.querySelectorAll('[data-name="total_short"]');
 const total_oss = document.querySelectorAll('[data-name="total_oss"]');
@@ -123,6 +122,46 @@ function rangeController() {
     input_nodes.value = 20;
   }
 }
+function rangeControllerLogs() {
+  if (input_logs_per_sec.value > 500) {
+    input_logs_per_sec.value = 500;
+  }
+  if (input_logs_per_sec.value < 10) {
+    input_logs_per_sec.value = 10;
+  }
+}
+function rangeControllerSpans() {
+  if (input_spans_per_sec.value > 100) {
+    input_spans_per_sec.value = 100;
+  }
+  if (input_spans_per_sec.value < 1) {
+    input_spans_per_sec.value = 1;
+  }
+}
+
+function rangeControllerContainers() {
+  if (input_containers.value > 500) {
+    input_containers.value = 500;
+  }
+  if (input_containers.value < 15) {
+    input_containers.value = 15;
+  }
+}
+
+function rangeControllerMetrics() {
+  if (input_metrics.value > 5000) {
+    input_metrics.value = 5000;
+  }
+  if (input_metrics.value < 250) {
+    input_metrics.value = 250;
+  }
+}
+
+input_metrics.addEventListener('blur', () => rangeControllerMetrics());
+input_containers.addEventListener('blur', () => rangeControllerContainers());
+
+input_spans_per_sec.addEventListener('blur', () => rangeControllerSpans());
+input_logs_per_sec.addEventListener('blur', () => rangeControllerLogs());
 input_range.addEventListener('blur', () => rangeController());
 input_nodes.addEventListener('blur', () => rangeController());
 
