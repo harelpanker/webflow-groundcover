@@ -166,7 +166,6 @@ function rangeControllerMetrics() {
 
 input_metrics.addEventListener('blur', () => rangeControllerMetrics());
 input_containers.addEventListener('blur', () => rangeControllerContainers());
-
 input_spans_per_sec.addEventListener('blur', () => rangeControllerSpans());
 input_logs_per_sec.addEventListener('blur', () => rangeControllerLogs());
 input_range.addEventListener('blur', () => rangeController());

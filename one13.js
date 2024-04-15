@@ -166,7 +166,6 @@ function rangeControllerMetrics() {
 
 input_metrics.addEventListener('blur', () => rangeControllerMetrics());
 input_containers.addEventListener('blur', () => rangeControllerContainers());
-
 input_spans_per_sec.addEventListener('blur', () => rangeControllerSpans());
 input_logs_per_sec.addEventListener('blur', () => rangeControllerLogs());
 input_range.addEventListener('blur', () => rangeController());
@@ -394,35 +393,54 @@ const handleDatadogInputChange = () => calculate_datadog();
 const handleInputChange = () => calculate_groundcover();
 const handleOssInputChange = () => calculate_oss();
 
-input_nodes.addEventListener('input', () => {
+const handleMultipleInputChange = () => {
   handleInputChange();
   handleDatadogInputChange();
   handleOssInputChange();
+};
+
+input_range.addEventListener('blur', () => {
+  rangeController();
+  handleMultipleInputChange();
+});
+input_nodes.addEventListener('blur', () => {
+  rangeController();
+  handleMultipleInputChange();
+});
+input_metrics.addEventListener('blur', () => {
+  rangeControllerMetrics();
+  handleMultipleInputChange();
+});
+input_containers.addEventListener('blur', () => {
+  rangeControllerContainers();
+  handleMultipleInputChange();
+});
+input_spans_per_sec.addEventListener('blur', () => {
+  rangeControllerSpans();
+  handleMultipleInputChange();
+});
+input_logs_per_sec.addEventListener('blur', () => {
+  rangeControllerLogs();
+  handleMultipleInputChange();
+});
+
+input_nodes.addEventListener('input', () => {
+  handleMultipleInputChange();
 });
 input_range.addEventListener('input', () => {
-  handleInputChange();
-  handleDatadogInputChange();
-  handleOssInputChange();
+  handleMultipleInputChange();
 });
 input_logs_per_sec.addEventListener('input', () => {
-  handleInputChange();
-  handleDatadogInputChange();
-  handleOssInputChange();
+  handleMultipleInputChange();
 });
 input_spans_per_sec.addEventListener('input', () => {
-  handleInputChange();
-  handleDatadogInputChange();
-  handleOssInputChange();
+  handleMultipleInputChange();
 });
-input_metrics.addEventListener('input', () => {
-  handleInputChange();
-  handleDatadogInputChange();
-  handleOssInputChange();
+input_metrics.addEventListener('blur', () => {
+  handleMultipleInputChange();
 });
 input_containers.addEventListener('input', () => {
-  handleInputChange();
-  handleDatadogInputChange();
-  handleOssInputChange();
+  handleMultipleInputChange();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
