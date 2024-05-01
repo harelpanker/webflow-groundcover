@@ -1,3 +1,5 @@
+// console.log('start');
+let userInteruct = false;
 const total = document.querySelectorAll('[data-name="total"]');
 const total_short = document.querySelectorAll('[data-name="total_short"]');
 const total_oss = document.querySelectorAll('[data-name="total_oss"]');
@@ -23,44 +25,55 @@ const total_oss_percent = document.querySelectorAll(
   '[data-name="total_oss_percent"]'
 );
 
-// table stuff
+// table stuff - groundcover
 const groundcover_subscription = document.querySelector(
   '[data-name="groundcover_subscription"]'
 );
-const datadog_subscription = document.querySelector(
-  '[data-name="datadog_subscription"]'
+const groundcover_logs = document.querySelector(
+  '[data-name="groundcover_logs"]'
 );
-const oss_subscription = document.querySelector(
-  '[data-name="oss_subscription"]'
+const groundcover_infrastructure = document.querySelector(
+  '[data-name="groundcover_infrastructure"]'
+);
+const groundcover_apm = document.querySelector('[data-name="groundcover_apm"]');
+const groundcover_costs = document.querySelector(
+  '[data-name="groundcover_costs"]'
 );
 const groundcover_hosting = document.querySelector(
   '[data-name="groundcover_hosting"]'
 );
-const datadog_hosting = document.querySelector('[data-name="datadog_hosting"]');
-const oss_hosting = document.querySelector('[data-name="oss_hosting"]');
-const groundcover_implementation = document.querySelector(
-  '[data-name="groundcover_implementation"]'
-);
-const datadog_implementation = document.querySelector(
-  '[data-name="datadog_implementation"]'
-);
-const oss_implementation = document.querySelector(
-  '[data-name="oss_implementation"]'
-);
-const groundcover_maintenance = document.querySelector(
-  '[data-name="groundcover_maintenance"]'
-);
-const datadog_maintenance = document.querySelector(
-  '[data-name="datadog_maintenance"]'
-);
-const oss_maintenance = document.querySelector('[data-name="oss_maintenance"]');
 const groundcover_support = document.querySelector(
   '[data-name="groundcover_support"]'
 );
+// table stuff - datadog
+const datadog_subscription = document.querySelector(
+  '[data-name="datadog_subscription"]'
+);
+const datadog_logs = document.querySelector('[data-name="datadog_logs"]');
+const datadog_infrastructure = document.querySelector(
+  '[data-name="datadog_infrastructure"]'
+);
+const datadog_apm = document.querySelector('[data-name="datadog_apm"]');
+const datadog_costs = document.querySelector('[data-name="datadog_costs"]');
+const datadog_hosting = document.querySelector('[data-name="datadog_hosting"]');
 const datadog_support = document.querySelector('[data-name="datadog_support"]');
+// table stuff - oss
+const oss_subscription = document.querySelector(
+  '[data-name="oss_subscription"]'
+);
+const oss_logs = document.querySelector('[data-name="oss_logs"]');
+const oss_infrastructure = document.querySelector(
+  '[data-name="oss_infrastructure"]'
+);
+const oss_apm = document.querySelector('[data-name="oss_apm"]');
+const oss_costs = document.querySelector('[data-name="oss_costs"]');
+const oss_hosting = document.querySelector('[data-name="oss_hosting"]');
 const oss_support = document.querySelector('[data-name="oss_support"]');
 
 // hidden form
+const modal_demo_btns = document.querySelectorAll(
+  '[fs-modal-element="open-9"]'
+);
 const hidden_form = document.querySelector('[data-name="TCO_Demo_Req"]');
 const first_name_hidden = document.querySelector('#first_name_hidden');
 const last_name_hidden = document.querySelector('#last_name_hidden');
@@ -68,11 +81,13 @@ const job_title_hidden = document.querySelector('#job_title_hidden');
 const company_hidden = document.querySelector('#company_hidden');
 const phone_hidden = document.querySelector('#phone_hidden');
 const email_hidden = document.querySelector('#email_hidden');
+const error_hidden = document.querySelector('#error-hidden');
 const nodes_hidden = document.querySelector('#nodes_hidden');
 const logs_per_sec_hidden = document.querySelector('#logs_per_sec_hidden');
 const spans_per_sec_hidden = document.querySelector('#spans_per_sec_hidden');
 const metrics_hidden = document.querySelector('#metrics_hidden');
 const containers_hidden = document.querySelector('#containers_hidden');
+const submit_hidden = document.querySelector('[data-name="submit_hidden"]');
 
 // gated form
 const modal_wrap = document.querySelector('#modal_wrap');
@@ -115,52 +130,49 @@ function formatNumber(num, precision = 0) {
 
   return num;
 }
-
 function updateValues() {
   input_nodes.value = input_range.value;
 }
 function rangeController() {
-  if (input_range.value > 2500 || input_nodes.value > 2500) {
-    input_range.value = 2500;
-    input_nodes.value = 2500;
+  if (input_range.value > 1000 || input_nodes.value > 1000) {
+    input_range.value = 1000;
+    input_nodes.value = 1000;
   }
-  if (input_range.value < 20 || input_nodes.value < 20) {
-    input_range.value = 20;
-    input_nodes.value = 20;
+  if (input_range.value < 100 || input_nodes.value < 100) {
+    input_range.value = 100;
+    input_nodes.value = 100;
   }
 }
 function rangeControllerLogs() {
   if (input_logs_per_sec.value > 500) {
     input_logs_per_sec.value = 500;
   }
-  if (input_logs_per_sec.value < 10) {
-    input_logs_per_sec.value = 10;
+  if (input_logs_per_sec.value < 50) {
+    input_logs_per_sec.value = 50;
   }
 }
 function rangeControllerSpans() {
   if (input_spans_per_sec.value > 100) {
     input_spans_per_sec.value = 100;
   }
-  if (input_spans_per_sec.value < 1) {
-    input_spans_per_sec.value = 1;
+  if (input_spans_per_sec.value < 20) {
+    input_spans_per_sec.value = 20;
   }
 }
-
 function rangeControllerContainers() {
   if (input_containers.value > 500) {
     input_containers.value = 500;
   }
-  if (input_containers.value < 15) {
-    input_containers.value = 15;
+  if (input_containers.value < 50) {
+    input_containers.value = 50;
   }
 }
-
 function rangeControllerMetrics() {
   if (input_metrics.value > 5000) {
     input_metrics.value = 5000;
   }
-  if (input_metrics.value < 250) {
-    input_metrics.value = 250;
+  if (input_metrics.value < 1000) {
+    input_metrics.value = 1000;
   }
 }
 
@@ -171,10 +183,13 @@ input_logs_per_sec.addEventListener('blur', () => rangeControllerLogs());
 input_range.addEventListener('blur', () => rangeController());
 input_nodes.addEventListener('blur', () => rangeController());
 
-input_range.addEventListener('input', () => {
-  updateValues();
-  rangeController();
-});
+const handleShowGatedForm = () => {
+  if (!userInteruct) {
+    modal_wrap.classList.add('show');
+    modal_wrap.click();
+  }
+  userInteruct = true;
+};
 
 const handleGradientChange = () => {
   const value = input_range.value;
@@ -184,11 +199,18 @@ const handleGradientChange = () => {
   input_range.style.background = `linear-gradient(to right, #828DF8 0%, #828DF8 ${percentage}%, #EAECF0 ${percentage}%, #EAECF0 100%)`;
 };
 
+input_range.addEventListener('input', () => {
+  handleShowGatedForm();
+  updateValues();
+  rangeController();
+});
+
 // https://codepen.io/amoknira/pen/vYZzgJZ
 input_range.addEventListener('input', handleGradientChange);
 
 input_nodes.addEventListener('input', () => {
   input_range.value = input_nodes.value;
+  handleShowGatedForm();
   updateValues();
   handleGradientChange();
 });
@@ -237,7 +259,23 @@ const calculate_groundcover = () => {
   const hosting_victoria_metrics_disk = victoria_metrics * 1000 * 0.08;
   const maintenance = (0.1 * 127000) / 12;
 
+  // table
   groundcover_subscription.innerHTML = `$${(license * 12).toLocaleString()}`;
+  groundcover_logs.innerHTML = 'Included';
+  groundcover_infrastructure.innerHTML = 'Included';
+  groundcover_apm.innerHTML = 'Included';
+  groundcover_costs.innerHTML = `$${(
+    Math.floor(
+      hosting_click_house_instance +
+        hosting_click_house_disk +
+        hosting_victoria_metrics_instance +
+        hosting_victoria_metrics_disk +
+        maintenance
+    ) * 12
+  ).toLocaleString()}`;
+  groundcover_support.innerHTML = `$${(
+    Math.floor(maintenance) * 12
+  ).toLocaleString()}`;
   groundcover_hosting.innerHTML = `$${(
     Math.floor(
       hosting_click_house_instance +
@@ -246,12 +284,8 @@ const calculate_groundcover = () => {
         hosting_victoria_metrics_disk
     ) * 12
   ).toLocaleString()}`;
-  groundcover_implementation.innerHTML = `$${0}`;
-  groundcover_maintenance.innerHTML = `$${(
-    Math.floor(maintenance) * 12
-  ).toLocaleString()}`;
-  groundcover_support.innerHTML = `$${0}`;
 
+  // total
   const totalNumber =
     (license +
       hosting_click_house_instance +
@@ -261,7 +295,6 @@ const calculate_groundcover = () => {
       maintenance) *
     12;
   graoundcover_price = totalNumber;
-
   total.forEach(
     (item) => (item.innerHTML = Math.round(totalNumber).toLocaleString())
   );
@@ -294,13 +327,18 @@ const calculate_oss = () => {
   const maintenance = (fte_salary * 1 + fte_salary * 0.5) * 12;
   const support = fte_salary * 1 * 12;
 
-  //
+  // table
   oss_subscription.innerHTML = `$0`;
+  oss_logs.innerHTML = `$0`;
+  oss_infrastructure.innerHTML = `$0`;
+  oss_apm.innerHTML = `$0`;
+  oss_costs.innerHTML = `$${Math.floor(
+    support + maintenance + implementation_and_setup + hosting
+  ).toLocaleString()}`;
   oss_hosting.innerHTML = `$${Math.floor(hosting).toLocaleString()}`;
-  oss_implementation.innerHTML = `$${implementation_and_setup.toLocaleString()}`;
-  oss_maintenance.innerHTML = `$${Math.floor(maintenance).toLocaleString()}`;
-  oss_support.innerHTML = `$${support.toLocaleString()}`;
-  //
+  oss_support.innerHTML = `$${Math.floor(
+    support + maintenance + implementation_and_setup
+  ).toLocaleString()}`;
 
   // total
   const monthlyCost =
@@ -312,7 +350,6 @@ const calculate_oss = () => {
   total_oss_percent.forEach(
     (item) => (item.innerHTML = (ossPercentage * 100).toFixed(0))
   );
-
   total_oss.forEach(
     (item) => (item.innerHTML = Math.round(yearlyCost).toLocaleString())
   );
@@ -323,6 +360,13 @@ const calculate_oss = () => {
 const calculate_datadog = () => {
   const input_nodes_value = input_nodes.value;
 
+  const logs_1 =
+    (0.1 *
+      (30 * 24 * 60 * 60) *
+      input_logs_per_sec.value *
+      input_nodes_value *
+      1.5) /
+    10 ** 6;
   const logs_2 =
     ((1.7 *
       (30 * 24 * 60 * 60) *
@@ -332,7 +376,7 @@ const calculate_datadog = () => {
       1.5 /
       10 ** 6) *
     0.5;
-  const logs = logs_2;
+  const logs = logs_1 + logs_2;
 
   const infrastructure_1 = 23 * input_nodes_value;
   const infrastructure_2 = 0 * 10 * input_nodes_value;
@@ -359,17 +403,23 @@ const calculate_datadog = () => {
   const maintenance = fte_salary * 0.25;
   const support = 0;
 
-  //
+  // table
   datadog_subscription.innerHTML = `$${(
     Math.floor(apm + logs + infrastructure) * 12
   ).toLocaleString()}`;
-  datadog_hosting.innerHTML = `$${0}`;
-  datadog_implementation.innerHTML = `$${0}`;
-  datadog_maintenance.innerHTML = `$${(
-    Math.floor(maintenance) * 12
+  datadog_logs.innerHTML = `$${(Math.floor(logs) * 12).toLocaleString()}`;
+  datadog_infrastructure.innerHTML = `$${(
+    Math.floor(infrastructure) * 12
   ).toLocaleString()}`;
-  datadog_support.innerHTML = `$${0}`;
-  //
+  datadog_apm.innerHTML = `$${(Math.floor(apm) * 12).toLocaleString()}`;
+
+  datadog_costs.innerHTML = `$${(
+    Math.floor(support + maintenance + implementation_and_setup) * 12
+  ).toLocaleString()}`;
+  datadog_hosting.innerHTML = 'Included';
+  datadog_support.innerHTML = `$${(
+    Math.floor(support + maintenance + implementation_and_setup) * 12
+  ).toLocaleString()}`;
 
   // prettier-ignore
   const monthlyCost = (support + maintenance + implementation_and_setup + apm + logs + infrastructure);
@@ -431,15 +481,19 @@ input_range.addEventListener('input', () => {
   handleMultipleInputChange();
 });
 input_logs_per_sec.addEventListener('input', () => {
+  handleShowGatedForm();
   handleMultipleInputChange();
 });
 input_spans_per_sec.addEventListener('input', () => {
+  handleShowGatedForm();
   handleMultipleInputChange();
 });
-input_metrics.addEventListener('blur', () => {
+input_metrics.addEventListener('input', () => {
+  handleShowGatedForm();
   handleMultipleInputChange();
 });
 input_containers.addEventListener('input', () => {
+  handleShowGatedForm();
   handleMultipleInputChange();
 });
 
@@ -448,6 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
   handleDatadogInputChange();
   calculate_oss();
   if (hasCookie) {
+    userInteruct = true;
     modal_wrap.style.display = 'none';
   }
 });
@@ -494,13 +549,17 @@ hidden_form.addEventListener('submit', (event) => {
     source: '/TCO_Demo_Req',
     userType: 'lead',
   });
+
+  modal_demo_btns.forEach((btn) => (btn.style.display = 'none'));
 });
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!window.location.href.includes('utm_source=test')) {
-    modal_wrap.classList.add('show');
+    // modal_wrap.classList.add('show');
     error.style.display = 'none';
+    error_hidden.style.display = 'none';
     submit.disabled = true;
+    submit_hidden.disabled = true;
   }
 });
 
@@ -555,6 +614,7 @@ const invalidDomains = [
   'yahoo.fr',
   'protonmail.com',
 ];
+
 email.addEventListener('blur', () => {
   const domainPart = email.value.split('@')[1];
 
@@ -568,84 +628,16 @@ email.addEventListener('blur', () => {
     submit.disabled = false;
   }
 });
+email_hidden.addEventListener('blur', () => {
+  const domainPart = email_hidden.value.split('@')[1];
 
-const emailWelcome = document.querySelector('#quick_intro_form #email_contact');
-const errorWelcome = document.querySelector('#error_welcome');
-const submitWelcome = document.querySelector('#quick_intro_form .submit');
-emailWelcome.addEventListener('blur', () => {
-  const domains = [
-    'gmail.com',
-    'yahoo.com',
-    'hotmail.com',
-    'competitor.com',
-    'orange.fr',
-    'outlook.com',
-    'yandex.ru',
-    'yandex.com',
-    'wanadoo.fr',
-    'yahoo.fr',
-    'protonmail.com',
-  ];
-  const domainPart = emailWelcome.value.split('@')[1];
-
-  if (domains.includes(domainPart)) {
-    errorWelcome.style.display = 'block';
-    emailWelcome.value = '';
-    emailWelcome.placeholder = 'Please enter a business email';
-    submitWelcome.disabled = true;
+  if (invalidDomains.includes(domainPart)) {
+    error_hidden.style.display = 'block';
+    email_hidden.value = '';
+    email_hidden.placeholder = 'Please enter a business email';
+    submit_hidden.disabled = true;
   } else {
-    errorWelcome.style.display = 'none';
-    submitWelcome.disabled = false;
+    error_hidden.style.display = 'none';
+    submit_hidden.disabled = false;
   }
-});
-
-const contact_form_welcome = document.querySelector('#quick_intro_form');
-const user_name_welcome = document.querySelector('#name');
-const job_title_welcome = document.querySelector('#job_title');
-const email_welcome = document.querySelector('#email_welcome');
-const phone_welcome = document.querySelector('#phone');
-const team_size_welcome = document.querySelector('#team_size');
-const currently_tool_welcome = document.querySelector('#currently_tool');
-const message_welcome = document.querySelector('#message');
-const environment_size_welcome = document.querySelector('#environment_size');
-const source_input_welcome = document.querySelector('#source-welcome');
-const country_input_welcome = document.querySelector('#country-welcome');
-
-document.addEventListener(
-  'DOMContentLoaded',
-  () => (source_input_welcome.value = window.location.href)
-);
-
-contact_form_welcome.addEventListener('submit', (event) => {
-  event.preventDefault();
-  analytics.identify(email_welcome.value || '', {
-    user_name: user_name_welcome.value || '',
-    job_title: job_title_welcome.value || '',
-    email: email_welcome.value || '',
-    phone: phone_welcome.value || '',
-    team_size: team_size_welcome.value || '',
-    environment_size: environment_size_welcome.value || '',
-    currently_tool: currently_tool_welcome.value || '',
-    message: message_welcome.value || '',
-    country:
-      document.querySelector('.selected-flag').getAttribute('title') || '',
-  });
-
-  analytics.track('quick_intro_form', {
-    userId: email_welcome.value || '',
-    user_name: user_name_welcome.value || '',
-    job_title: job_title_welcome.value || '',
-    phone: phone_welcome.value || '',
-    team_size: team_size_welcome.value || '',
-    environment_size: environment_size_welcome.value || '',
-    currently_tool: currently_tool_welcome.value || '',
-    message: message_welcome.value || '',
-    country:
-      document.querySelector('.selected-flag').getAttribute('title') || '',
-    page_path: window.location.href,
-    reporter: 'webflow',
-    event: 'form_demo_flow',
-    source: '/welcome',
-    userType: 'lead',
-  });
 });

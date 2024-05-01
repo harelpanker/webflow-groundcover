@@ -555,6 +555,7 @@ const invalidDomains = [
   'yahoo.fr',
   'protonmail.com',
 ];
+
 email.addEventListener('blur', () => {
   const domainPart = email.value.split('@')[1];
 
