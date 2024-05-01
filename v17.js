@@ -1,4 +1,4 @@
-// console.log('start');
+console.log('start');
 let userInteruct = false;
 const total = document.querySelectorAll('[data-name="total"]');
 const total_short = document.querySelectorAll('[data-name="total_short"]');
@@ -213,6 +213,23 @@ input_nodes.addEventListener('input', () => {
   handleShowGatedForm();
   updateValues();
   handleGradientChange();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculate_groundcover();
+  handleDatadogInputChange();
+  calculate_oss();
+
+  error_hidden.style.display = 'none';
+
+  if (window.location.href.includes('utm_source=no-form')) {
+    setCookie('TCO_Gated_Form_Submit', 'true', 30);
+    userInteruct = true;
+  }
+
+  if (hasCookie) {
+    userInteruct = true;
+  }
 });
 
 function setCookie(cookieName, cookieValue, expirationDays) {
@@ -497,16 +514,6 @@ input_containers.addEventListener('input', () => {
   handleMultipleInputChange();
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  calculate_groundcover();
-  handleDatadogInputChange();
-  calculate_oss();
-  if (hasCookie) {
-    userInteruct = true;
-    modal_wrap.style.display = 'none';
-  }
-});
-
 // hidden form event
 hidden_form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -551,16 +558,6 @@ hidden_form.addEventListener('submit', (event) => {
   });
 
   modal_demo_btns.forEach((btn) => (btn.style.display = 'none'));
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (!window.location.href.includes('utm_source=test')) {
-    // modal_wrap.classList.add('show');
-    error.style.display = 'none';
-    error_hidden.style.display = 'none';
-    submit.disabled = true;
-    submit_hidden.disabled = true;
-  }
 });
 
 gated_form.addEventListener('submit', (event) => {
